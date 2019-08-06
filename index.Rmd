@@ -1,0 +1,92 @@
+---
+title: >
+  <div class="hidden">EMR<div>
+bibliography: config/refs.bib
+csl: config/ABNT-UFPR-2011-Mendeley.csl
+output:
+  html_document:
+    number_sections: false
+    toc: false
+    #css: [config/style-site.css]
+    includes:
+      before_body: config/header-index.html
+      after_body: config/footer.html
+---
+
+```{r setup, include=FALSE}
+source("config/setup.R")
+```
+
+# Informações
+
+  + **Curso:** CE-092 Extensões de Modelos de Regressão.
+  + **Instrutores:**
+    - [Walmes Marques Zeviani], (DEST/[LEG]).
+    - [Paulo Justiniano Ribeiro Jr], (DEST/[LEG]).
+  + **Carga horária**: 60 horas.
+  + **Local e horário:**
+    - Terça-feira 19h30 - 21h30 · PA-01.
+    - Quinta-feira 21h30 - 23h30 · PA-01.
+  + **Moodle**: <https://moodle.c3sl.ufpr.br/course/view.php?id=248>.
+    - Fórum para dúvidas.
+    - Avisos em geral.
+    - Agendamento de provas, trabalhos.
+    - Aplicação das sabatinas.
+  + **Ofertas anteriores**:
+    [2014](http://leg.ufpr.br/doku.php/disciplinas:ce092-2014-02),
+    [2015](http://leg.ufpr.br/doku.php/disciplinas:ce092-2015-02),
+    [2016](http://leg.ufpr.br/doku.php/disciplinas:ce092-2016-02),
+    [2017](http://leg.ufpr.br/doku.php/disciplinas:ce092-2017-02),
+    [2018](http://leg.ufpr.br/doku.php/disciplinas:ce092-2018-02).
+
+# Conteúdo previsto
+
+  1. Revisão de modelos lineares de posto completo
+  2. Revisão de modelos lineares de posto incompleto
+  3. Revisão de modelos lineares generalizados
+  4. Modelos de regressão local
+  5. Modelos de regressão de splines
+  6. Modelos aditivos generalizados
+  7. Modelos não lineares
+  8. Modelos de regressão com erros não IID
+  9. Modelos de efeitos aleatórios
+  10. Modelos de árvores de regressão e classificação
+  11. Modelos de redes neurais
+  12. Introdução aos modelos de regressão multivariados
+
+\*Sujeito a alteração conforme andamento do curso.
+
+# Avaliações
+
+  * ~10 sabatinas regulares.
+  * 2 provas.
+  * 1 trabalho.
+
+\*Sujeito a alteração conforme andamento do curso.
+
+# Referências bibliográficas
+
+```{r, include = FALSE}
+# system("sed '/Url/d' config/refs.bib > config/Refs.bib")
+refs <- system("grep -E '^@[[:alpha:]]+{' config/refs.bib",
+               intern = TRUE)
+refs <- gsub("^@[[:alpha:]]+\\{([[:alnum:]]+),",
+             replacement = "@\\1",
+             x = refs)
+cat(refs, sep = ", ")
+x <- paste(refs, collapse = ", ")
+```
+
+---
+nocite: |
+  `r x`
+...
+
+<!-- Coloca as referências aqui. -->
+<div id="refs">
+</div>
+
+<!-- links -->
+[Walmes Marques Zeviani]: http://leg.ufpr.br/~walmes
+[Paulo Justiniano Ribeiro Jr]: http://leg.ufpr.br/~walmes
+[LEG]: http://www.leg.ufpr.br

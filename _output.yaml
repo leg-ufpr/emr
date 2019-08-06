@@ -1,0 +1,17 @@
+html_document:
+  highlight: haddock
+  fig_caption: yes
+  fig_align: center
+  # code_folding: hide
+  toc: true
+  toc_dep: 3
+  toc_float:
+    collapsed: false
+    smooth_scroll: false
+  number_sections: true
+  css: [config/style-site.css, config/style-vignette.css]
+  includes:
+    in_header: config/MathJax.html
+    before_body: config/header.html
+    after_body: config/footer.html
+  mathjax: default

@@ -1,0 +1,45 @@
+name: "EMR"
+exclude: ["README.md", "cache", "data", "_site.yml", "_build.sh", "_deploy.sh"]
+output:
+  html_document:
+    theme: united
+    highlight: default
+    number_sections: true
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    includes:
+      in_header: config/MathJax.html
+      before_body: config/header.html
+      after_body: config/footer.html
+    css: config/style-site.css
+navbar:
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Slides"
+      icon: fa-desktop
+      menu:
+      - text: "Arquvios em breve"
+        # href: slides/
+        icon: fa-folder-open-o
+    - text: "Tutoriais"
+      icon: fa-file
+      menu:
+      - text: "Arquivos em breve"
+        # href: "instalacao-anaconda.html"
+        icon: fa-file
+    - text: "Scripts"
+      icon: fa-code
+      href: scripts/
+  right:
+    - icon: fa-user
+      text: W. Zeviani
+      href: http://leg.ufpr.br/~walmes
+    - icon: fa-user
+      text: P. Justiniano
+      href: http://leg.ufpr.br/~paulojus
+    - icon: fa-git-square
+      href: https://github.com/leg-ufpr/emr
