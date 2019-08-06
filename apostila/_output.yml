@@ -1,0 +1,59 @@
+# ---- GitBook ----
+bookdown::gitbook:
+  highlight: haddock
+  css: config/gb-style.css
+  includes:
+    in_header: [config/MathJax.html]
+    after_body: config/gb-footer.html
+  config:
+    toc:
+      before: |
+        <center style="margin: 1em;">
+          <img src="./config/capa.png" width="180px" style="box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.6);"/>
+          <br/>
+          <br/>
+          <a href="./index.html" style="font-weight: bold; font-size: larger;">
+            Extensões de Modelos de Regressão
+          </a>
+          <br/>
+          <br/>
+          Notas de aula
+          <br/>
+          <br/>
+          <a href="http://leg.ufpr.br/~paulojus target="_blank">
+            Paulo Justiniano Ribeiro Jr
+          </a><br>
+          <a href="http://leg.ufpr.br/~walmes" target="_blank">
+            Walmes Marques Zeviani
+          </a>
+          <br/>
+          <br/>
+          <span style="font-weight: bold; font-size: smaller;">
+            <a href="http://leg.ufpr.br" target="_blank">
+              Laboratório de Estatística e Geoinformação
+            </a>
+            <br/>
+            <a href="http://www.est.ufpr.br" target="_blank">
+              Departamento de Estatística
+            </a>
+            <br/>
+            <a href="http://www.ufpr.br" target="_blank">
+              Universidade Federal do Paraná
+            </a>
+          </span>
+        </center>
+      after: |
+        <li>
+          <a href="https://github.com/walmes/mpaer" target="_blank">
+            Produzido com bookdown
+          </a>
+        </li>
+    edit: https://github.com/leg-ufpr/emr/edit/master/%s
+    sharing:
+      facebook: yes
+      twitter: yes
+      # google: yes
+      # weibo: yes
+      # instapper: yes
+      # vk: yes
+      # all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']
