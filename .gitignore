@@ -90,7 +90,9 @@ slides/figure/*
 *.synctex.gz(busy)
 *.pdfsync
 
+## Project specific:
 README.html
+apostila/README.html
 index.html
 _site/
 css/
@@ -98,6 +100,9 @@ js/
 tempdir/
 config/logo/
 config/bib/
+apostila/_book/
+apostila/_bookdown_files/
+apostila/emr.Rmd
 
 bank-*
 bank.*
