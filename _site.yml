@@ -1,5 +1,5 @@
 name: "EMR"
-exclude: ["README.md", "cache", "data", "_site.yml", "_build.sh", "_deploy.sh"]
+exclude: ["README.md", "cache", "data", "apostila", "_site.yml", "_build.sh", "_deploy.sh"]
 output:
   html_document:
     theme: united
@@ -19,6 +19,9 @@ navbar:
   left:
     - icon: fa-home
       href: index.html
+    - text: "Apostila"
+      href: apostila/
+      icon: fa-book
     - text: "Slides"
       icon: fa-desktop
       menu:
@@ -36,10 +39,10 @@ navbar:
       href: scripts/
   right:
     - icon: fa-user
-      text: W. Zeviani
-      href: http://leg.ufpr.br/~walmes
-    - icon: fa-user
       text: P. Justiniano
       href: http://leg.ufpr.br/~paulojus
+    - icon: fa-user
+      text: W. Zeviani
+      href: http://leg.ufpr.br/~walmes
     - icon: fa-git-square
       href: https://github.com/leg-ufpr/emr

@@ -11,6 +11,8 @@ Regressão disponível em <http://web.leg.ufpr.br/ensino/EMR/>.
   * `tutoriais/`: é para manter tutorais em Rmd.
   * `config/`: é para arquivos de configuração da página.
     * `refs.bib`: contém as referências bibiográficas.
+  * `apostila/`: documento com notas de aula do curso. Organização está
+    documentada no arquivo `./apostila/README.md`.
 
 **ATENÇÃO**: apenas versionar os fontes essenciais. Arquivos gerados
 pela compilação NÃO DEVEM SER VERSIONADOS.

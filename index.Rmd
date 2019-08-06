@@ -7,22 +7,17 @@ output:
   html_document:
     number_sections: false
     toc: false
-    #css: [config/style-site.css]
     includes:
       before_body: config/header-index.html
       after_body: config/footer.html
 ---
 
-```{r setup, include=FALSE}
-source("config/setup.R")
-```
-
 # Informações
 
   + **Curso:** CE-092 Extensões de Modelos de Regressão.
   + **Instrutores:**
-    - [Walmes Marques Zeviani], (DEST/[LEG]).
     - [Paulo Justiniano Ribeiro Jr], (DEST/[LEG]).
+    - [Walmes Marques Zeviani], (DEST/[LEG]).
   + **Carga horária**: 60 horas.
   + **Local e horário:**
     - Terça-feira 19h30 - 21h30 · PA-01.
@@ -38,6 +33,7 @@ source("config/setup.R")
     [2016](http://leg.ufpr.br/doku.php/disciplinas:ce092-2016-02),
     [2017](http://leg.ufpr.br/doku.php/disciplinas:ce092-2017-02),
     [2018](http://leg.ufpr.br/doku.php/disciplinas:ce092-2018-02).
+  + [Calendário acadêmico 2019 resumido](http://www.coordest.ufpr.br/wp-content/uploads/2019/03/Calendario-Ilustrado.jpg).
 
 # Conteúdo previsto
 
@@ -50,19 +46,23 @@ source("config/setup.R")
   7. Modelos não lineares
   8. Modelos de regressão com erros não IID
   9. Modelos de efeitos aleatórios
-  10. Modelos de árvores de regressão e classificação
-  11. Modelos de redes neurais
-  12. Introdução aos modelos de regressão multivariados
+  10. Modelos de regressão quantílica
+  11. Modelos de árvores de regressão e classificação
+  12. Modelos de redes neurais
+  13. Introdução aos modelos de regressão multivariados
 
-\*Sujeito a alteração conforme andamento do curso.
+\*Ordem e prioridade sujeitas a alteração conforme andamento do curso.
 
 # Avaliações
 
-  * ~10 sabatinas regulares.
+  * ~10 sabatinas semanais.
   * 2 provas.
-  * 1 trabalho.
+    * 1ª prova: Terça 17 de Setembro de 2019.
+    * 2ª prova: Terça 05 de Novembro de 2019.
+  * 1 trabalho: 18/11 a 29/12 de 2019.
+  * Exame final: Terça 10 de Dezembro de 2019.
 
-\*Sujeito a alteração conforme andamento do curso.
+\*Datas e avalições sujeitas a alteração conforme andamento do curso.
 
 # Referências bibliográficas
 
