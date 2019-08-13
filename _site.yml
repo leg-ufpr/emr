@@ -22,6 +22,9 @@ navbar:
     - text: "Apostila"
       href: apostila/
       icon: fa-book
+    - text: "Histórico"
+      icon: fa-calendar
+      href: historico.html
     - text: "Slides"
       icon: fa-desktop
       menu:

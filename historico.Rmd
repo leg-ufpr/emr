@@ -1,0 +1,83 @@
+---
+#title: "Calendário das aulas"
+output:
+  html_document:
+    number_sections: false
+    toc: false
+#    code_folding: hide
+---
+
+# Histórico das aulas
+
+```{r setup, include = FALSE}
+library(knitr, quietly = TRUE)
+source("config/setup.R")
+opts_chunk$set(cache = TRUE,
+               tidy = FALSE,
+               comment = "#")
+```
+```{r, include = FALSE, eval = FALSE}
+ter <- seq.Date(as.Date("2019-08-06"),
+                length.out = 18,
+                by = "1 week")
+qui <- seq.Date(as.Date("2019-08-08"),
+                length.out = 18,
+                by = "1 week")
+dts <- sort(c(ter, qui))
+
+cat(paste0("  ",
+           seq_along(dts),
+           ". ",
+           format(dts, "%a %d/%b"),
+           ":"), sep = "\n")
+```
+
+  1. Ter 06/Ago:
+     * Aula inaugural.
+     * Informações sobre o curso, avaliações, datas, etc.
+     * Uma visão geral do conteúdo de EMR.
+  2. Qui 08/Ago:
+     * Revisão de modelos lineares.
+     * Especificação, ajuste, testes de hipótese para funções lineares.
+     * Estudo de caso: <http://leg.ufpr.br/~walmes/analises/LFOliveira/analise.html>.
+  3. Ter 13/Ago:
+     * Aula bônus em função da paralização em apoio a educação.
+     * O delineamento de blocos incompletos balanceados.
+     * Aspectos inferênciais de funções lineares, médias marginais
+       ajustadas e comparações múltiplas.
+     * Material usado:
+       <http://leg.ufpr.br/~walmes/mpaer/blocos-incompletos-balanceados.html>.
+  4. Qui 15/Ago:
+  5. Ter 20/Ago:
+  6. Qui 22/Ago:
+  7. Ter 27/Ago:
+  8. Qui 29/Ago:
+  9. Ter 03/Set:
+  10. Qui 05/Set:
+  11. Ter 10/Set:
+  12. Qui 12/Set:
+  13. Ter 17/Set: 1º avaliação (previsto).
+  14. Qui 19/Set:
+  15. Ter 24/Set:
+  16. Qui 26/Set:
+  17. Ter 01/Out:
+  18. Qui 03/Out:
+  19. Ter 08/Out:
+  20. Qui 10/Out:
+  21. Ter 15/Out:
+  22. Qui 17/Out:
+  23. Ter 22/Out:
+  24. Qui 24/Out:
+  25. Ter 29/Out:
+  26. Qui 31/Out:
+  27. Ter 05/Nov: 2º avaliação (previsto).
+  28. Qui 07/Nov:
+  29. Ter 12/Nov:
+  30. Qui 14/Nov:
+  31. Ter 19/Nov:
+  32. Qui 21/Nov:
+  33. Ter 26/Nov:
+  34. Qui 28/Nov:
+  35. Ter 03/Dez:
+  36. Qui 05/Dez:
+  36. Ter 10/Dez: Exame final.
