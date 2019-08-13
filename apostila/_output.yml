@@ -44,7 +44,7 @@ bookdown::gitbook:
         </center>
       after: |
         <li>
-          <a href="https://github.com/walmes/mpaer" target="_blank">
+          <a href="https://github.com/leg-ufpr/emr" target="_blank">
             Produzido com bookdown
           </a>
         </li>
