@@ -20,8 +20,8 @@ output:
     - [Walmes Marques Zeviani], (DEST/[LEG]).
   + **Carga horária**: 60 horas.
   + **Local e horário:**
-    - Terça-feira 19h30 - 21h30 · PA-01.
-    - Quinta-feira 21h30 - 23h30 · PA-01.
+    - Terça-feira 1º horário · PA-01.
+    - Quinta-feira 2º horário · LAB-B.
   + **Moodle**: <https://moodle.c3sl.ufpr.br/course/view.php?id=248>.
     - Fórum para dúvidas.
     - Avisos em geral.

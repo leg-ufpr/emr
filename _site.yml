@@ -29,17 +29,18 @@ navbar:
       icon: fa-desktop
       menu:
       - text: "Arquvios em breve"
-        # href: slides/
         icon: fa-folder-open-o
     - text: "Tutoriais"
       icon: fa-file
       menu:
       - text: "Arquivos em breve"
-        # href: "instalacao-anaconda.html"
         icon: fa-file
     - text: "Scripts"
       icon: fa-code
-      href: scripts/
+      menu:
+        - text: ajuste-comparacao-modelos.R
+          href: ./scripts/ajuste-comparacao-modelos.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano
