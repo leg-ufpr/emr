@@ -32,24 +32,33 @@ cat(paste0("  ",
            ":"), sep = "\n")
 ```
 
-  1. Ter 06/Ago:
+  1. Ter 06/Ago (WZ):
      * Aula inaugural.
      * Informações sobre o curso, avaliações, datas, etc.
      * Uma visão geral do conteúdo de EMR.
-  2. Qui 08/Ago:
+  2. Qui 08/Ago (WZ):
      * Revisão de modelos lineares.
      * Especificação, ajuste, testes de hipótese para funções lineares.
      * Estudo de caso: <http://leg.ufpr.br/~walmes/analises/LFOliveira/analise.html>.
-  3. Ter 13/Ago:
-     * Aula bônus em função da paralização em apoio a educação.
+  3. Ter 13/Ago (WZ):
+     * Aula bônus em função da paralização em apoio à educação.
      * O delineamento de blocos incompletos balanceados.
      * Aspectos inferênciais de funções lineares, médias marginais
        ajustadas e comparações múltiplas.
      * Material usado:
        <http://leg.ufpr.br/~walmes/mpaer/blocos-incompletos-balanceados.html>.
-  4. Qui 15/Ago:
-  5. Ter 20/Ago:
-  6. Qui 22/Ago:
+  4. Qui 15/Ago (PJ):
+     * Revisão de modelos de regressão.
+     * Pressupostos, modelo para a média e para a variância.
+     * Modelos lineares generalizados.
+     * Estudo de caso.
+  5. Ter 20/Ago (PJ):
+     * Medidas de ajuste de modelos de regressão.
+     * Verossmilhança para modelos com a resposta transformada.
+  6. Qui 22/Ago (PJ):
+     * Introdução aos modelos de regressão segmentados.
+     * Restrições lineares nos parâmetros e construção das variáveis.
+     * Modelo de dois segmentos lineares disconectados e conectados.
   7. Ter 27/Ago:
   8. Qui 29/Ago:
   9. Ter 03/Set:
@@ -80,4 +89,4 @@ cat(paste0("  ",
   34. Qui 28/Nov:
   35. Ter 03/Dez:
   36. Qui 05/Dez:
-  36. Ter 10/Dez: Exame final.
+  37. Ter 10/Dez: Exame final.
