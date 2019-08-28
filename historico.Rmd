@@ -59,7 +59,10 @@ cat(paste0("  ",
      * Introdução aos modelos de regressão segmentados.
      * Restrições lineares nos parâmetros e construção das variáveis.
      * Modelo de dois segmentos lineares disconectados e conectados.
-  7. Ter 27/Ago:
+  7. Ter 27/Ago (PJ):
+     * Regressão por partes e segmentada - diferentes casos com um ponto de corte.
+     * Regressões com dois (ou mais) pontos de corte.
+     * Diferentes parametrizações.
   8. Qui 29/Ago:
   9. Ter 03/Set:
   10. Qui 05/Set:
