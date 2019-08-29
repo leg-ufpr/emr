@@ -41,6 +41,12 @@ navbar:
         - text: ajuste-comparacao-modelos.R
           href: ./scripts/ajuste-comparacao-modelos.R
           icon: fa-file
+        - text: segmentada1e2cortes.R
+          href: ./scripts/segmentada1e2cortes.R
+          icon: fa-file
+        - text: knots.R
+          href: ./scripts/knots.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano
