@@ -63,7 +63,9 @@ cat(paste0("  ",
      * Regressão por partes e segmentada - diferentes casos com um ponto de corte.
      * Regressões com dois (ou mais) pontos de corte.
      * Diferentes parametrizações.
-  8. Qui 29/Ago:
+  8. Qui 29/Ago (PJ): 
+     * Estimação de nós em regressão segmentada [script](script)(script/knots.R)
+     * Introdução aos splines [script](script/Linear2Cubico.R) 
   9. Ter 03/Set:
   10. Qui 05/Set:
   11. Ter 10/Set:

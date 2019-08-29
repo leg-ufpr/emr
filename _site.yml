@@ -47,6 +47,9 @@ navbar:
         - text: knots.R
           href: ./scripts/knots.R
           icon: fa-file
+        - text: Linear2Cubico.R
+          href: ./scripts/Linear2Cubico.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano
