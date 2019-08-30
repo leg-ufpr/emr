@@ -60,12 +60,15 @@ cat(paste0("  ",
      * Restrições lineares nos parâmetros e construção das variáveis.
      * Modelo de dois segmentos lineares disconectados e conectados.
   7. Ter 27/Ago (PJ):
-     * Regressão por partes e segmentada - diferentes casos com um ponto de corte.
-     * Regressões com dois (ou mais) pontos de corte.
+     * Regressão por partes e segmentada para diferentes casos com um
+       ponto de corte.
+     * Regressões com dois ou mais pontos de corte.
      * Diferentes parametrizações.
-  8. Qui 29/Ago (PJ): 
-     * Estimação de nós em regressão segmentada [script](script)(script/knots.R)
-     * Introdução aos splines [script](script/Linear2Cubico.R) 
+  8. Qui 29/Ago (PJ):
+     * Estimação de nós (pontos de corte) em regressão segmentada
+       [./scripts/knots.R](./scripts/knots.R).
+     * Introdução aos modelos splines
+       [./scripts/Linear2Cubico.R](./scripts/Linear2Cubico.R).
   9. Ter 03/Set:
   10. Qui 05/Set:
   11. Ter 10/Set:
