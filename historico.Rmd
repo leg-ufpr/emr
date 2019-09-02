@@ -70,6 +70,8 @@ cat(paste0("  ",
      * Introdução aos modelos splines
        [./scripts/Linear2Cubico.R](./scripts/Linear2Cubico.R).
   9. Ter 03/Set:
+     * Modelos de regressão por splines
+       [./scripts/Linear2Splines.R](./scripts/Linear2Splines.R).
   10. Qui 05/Set:
   11. Ter 10/Set:
   12. Qui 12/Set:
