@@ -22,6 +22,24 @@ library(mgcv)    # Modelos aditivos generalizados: gam().
 library(lattice)      # Gráficos.
 library(latticeExtra) # Complementos para a `lattice`.
 
+sui <- read.table("http://www.leg.ufpr.br/~walmes/data/preabate.txt",
+                  header = TRUE, dec = ",")
+sui$trat <- factor(-1 * sui$trat)
+levels(sui$trat) <- c("Sem aspersão", "Com aspersão")
+str(sui)
+
+xyplot(temp ~ hora,
+       groups = trat,
+       data = sui,
+       xlab = "Minutos à partir das 07:00 da manhã",
+       ylab = "Temperatura corporal (ºC)",
+       auto.key = TRUE) +
+    glayer(panel.smoother(..., span = 0.4))
+
+sui2 <- subset(sui, trat == "Com aspersão")
+
+plot(temp ~ hora, data = sui2)
+
 #-----------------------------------------------------------------------
 # Conteúdo para usar na explicação.
 
@@ -91,106 +109,11 @@ rp.poly <- function(y, x, er = 0) {
     rp.do(panel, action = draw.poly)
 }
 
-rp.poly(x = cars$speed, y = cars$dist, er = 0.3)
+rp.poly(x = sui2$hora, y = sui2$temp, er = 0.3)
+
+rp.poly(x = sui$, y = cars$dist, er = 0.3)
 
 rp.poly(x = faithful$eruptions, y = faithful$waiting, er = 0.3)
-
-#-----------------------------------------------------------------------
-# Local polynomial regression.
-
-rp.loess <- function(y, x, n = 20, er = 0, ...) {
-    annotations <- function(m0, y) {
-        mtext(side = 3, adj = 0, line = 1.5,
-              text = sprintf("H trace: %0.2f", m0$trace.hat))
-        mtext(side = 3, adj = 0, line = 0.5,
-              text = sprintf("Equivalent num. param.: %0.2f", m0$enp))
-        r2 <- 100 * cor(fitted(m0), y)^2
-        mtext(side = 3, adj = 1, line = 1.5,
-              text = sprintf("R²: %0.2f", r2))
-    }
-    draw.loess <- function(panel) {
-        with(panel, {
-            m0 <- loess(y ~ x, span = span, degree = degree,
-                        family = "gaussian")
-            erx <- extendrange(x, f = er)
-            xx <- seq(erx[1], erx[2], length.out = 200)
-            yy <- predict(m0,
-                          newdata = data.frame(x = xx),
-                          se = TRUE)
-            a <- abs(x - x0)
-            if (span < 1) {
-                q <- as.integer(span * length(x))
-                d <- sort(a)[q]
-            } else {
-                q <- length(x)
-                d <- max(abs(x - x0)) * sqrt(span)
-            }
-            w <- rep(0, length(x))
-            s <- a <= d
-            w[s] <- (1 - (a[s]/d)^3)^3
-            i <- as.integer(s)
-            xl <- range(x)
-            xl[1] <- ifelse(x0 - d > xl[1], x0 - d, xl[1])
-            xl[2] <- ifelse(x0 + d < xl[2], x0 + d, xl[2])
-            f0 <- function(...) {
-                y.pred <- sum(w * y)/sum(w)
-                segments(xl[1], y.pred, xl[2], y.pred, col = 2, lwd = 2,
-                         ...)
-            }
-            f1 <- function(...) {
-                m <- lm(y ~ poly(x, degree = 1), weights = w)
-                y.pred <- predict(m, newdata = list(x = xl))
-                segments(xl[1], y.pred[1], xl[2], y.pred[2],
-                         col = 2, lwd = 2, ...)
-            }
-            f2 <- function(...) {
-                m <- lm(y ~ poly(x, degree = as.integer(degree)),
-                        weights = w)
-                x.pred <- seq(xl[1], xl[2], length.out = n)
-                y.pred <- predict(m, newdata = list(x = x.pred))
-                lines(x.pred, y.pred, col = 2, lwd = 2, ...)
-            }
-            cb <- cbind(yy$fit,
-                        yy$fit - 1.96 * yy$se.fit,
-                        yy$fit + 1.96 * yy$se.fit)
-            u <- !is.na(yy$se.fit)
-            plot(x, y, type = "n",
-                 xlim = extendrange(x, f = er),
-                 ylim = extendrange(y, f = er))
-            polygon(c(xx[u], rev(xx[u])),
-                    c(cb[u, 2], rev(cb[u, 3])),
-                    # col = "orange",
-                    col = adjustcolor("orange", alpha.f = 0.5),
-                    border = "gray")
-            lines(xx, cb[, 1])
-            points(x, y, pch = 2 * (!s) + 1, cex = i * 3 * w + 1, ...)
-            abline(v = c(x0, xl), lty = c(2, 3, 3))
-            annotations(m0, y)
-            mtext(side = 3, adj = 1, line = 0.5,
-                  text = sprintf("Number of obs. used/total: %i/%i",
-                                 sum(w > 0), length(y)))
-            switch(findInterval(degree, c(-Inf, 1, 2, Inf)),
-                   `0` = f0(), `1` = f1(), `2` = f2())
-        })
-        panel
-    }
-    xr <- extendrange(x, f = er)
-    panel <- rp.control(x = x, y = y, n = n, er = er)
-    rp.doublebutton(panel, variable = degree, action = draw.loess,
-                    showvalue = TRUE, step = 1, initval = 0,
-                    range = c(0, 2), title = "Degree")
-    rp.slider(panel, variable = x0, action = draw.loess, from = xr[1],
-              to = xr[2], initval = median(range(x)), showvalue = TRUE,
-              title = "x-value")
-    rp.slider(panel, variable = span, action = draw.loess, from = 0,
-              to = 1.5, initval = 0.75, showvalue = TRUE,
-              title = "span")
-    rp.do(panel, action = draw.loess)
-}
-
-rp.loess(x = cars$speed, y = cars$dist, n = 25, er = 0.2)
-
-rp.loess(x = faithful$eruptions, y = faithful$waiting, er = 0.3)
 
 #-----------------------------------------------------------------------
 # Regression splines.
@@ -326,10 +249,11 @@ rp.spline <- function(x, y, er = 0, ...) {
     rp.do(panel, action = draw.df.degree)
 }
 
-rp.spline(x = cars$speed, y = cars$dist, er = 0.3,
-          xlab = "Velocidade", ylab = "Distância")
+rp.spline(x = sui2$hora, y = sui2$temp, er = 0.05)
 
-rp.spline(x = faithful$eruptions, y = faithful$waiting, er = 0.3)
+rp.spline(x = cars$speed, y = cars$dist, er = 0.05)
+
+rp.spline(x = faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
 # Smoothing splines.
@@ -392,19 +316,113 @@ rp.smooth.spline <- function(x, y, er = 0, ...) {
     rp.button(panel, action = draw.default, title = "Default fit")
 }
 
-rp.smooth.spline(cars$speed,
-                 cars$dist,
-                 er = 0.3,
-                 xlab = "Velocidade",
-                 ylab = "Comprimento")
+rp.smooth.spline(x = sui2$hora, y = sui2$temp, er = 0.05)
 
-rp.smooth.spline(faithful$eruptions, y = faithful$waiting, er = 0.3)
+rp.smooth.spline(x = cars$speed, y = cars$dist, er = 0.05)
+
+rp.smooth.spline(faithful$eruptions, y = faithful$waiting, er = 0.05)
+
+#-----------------------------------------------------------------------
+# Local polynomial regression.
+
+rp.loess <- function(y, x, n = 20, er = 0, ...) {
+    annotations <- function(m0, y) {
+        mtext(side = 3, adj = 0, line = 1.5,
+              text = sprintf("H trace: %0.2f", m0$trace.hat))
+        mtext(side = 3, adj = 0, line = 0.5,
+              text = sprintf("Equivalent num. param.: %0.2f", m0$enp))
+        r2 <- 100 * cor(fitted(m0), y)^2
+        mtext(side = 3, adj = 1, line = 1.5,
+              text = sprintf("R²: %0.2f", r2))
+    }
+    draw.loess <- function(panel) {
+        with(panel, {
+            m0 <- loess(y ~ x, span = span, degree = degree,
+                        family = "gaussian")
+            erx <- extendrange(x, f = er)
+            xx <- seq(erx[1], erx[2], length.out = 200)
+            yy <- predict(m0,
+                          newdata = data.frame(x = xx),
+                          se = TRUE)
+            a <- abs(x - x0)
+            if (span < 1) {
+                q <- as.integer(span * length(x))
+                d <- sort(a)[q]
+            } else {
+                q <- length(x)
+                d <- max(abs(x - x0)) * sqrt(span)
+            }
+            w <- rep(0, length(x))
+            s <- a <= d
+            w[s] <- (1 - (a[s]/d)^3)^3
+            i <- as.integer(s)
+            xl <- range(x)
+            xl[1] <- ifelse(x0 - d > xl[1], x0 - d, xl[1])
+            xl[2] <- ifelse(x0 + d < xl[2], x0 + d, xl[2])
+            f0 <- function(...) {
+                y.pred <- sum(w * y)/sum(w)
+                segments(xl[1], y.pred, xl[2], y.pred, col = 2, lwd = 2,
+                         ...)
+            }
+            f1 <- function(...) {
+                m <- lm(y ~ poly(x, degree = 1), weights = w)
+                y.pred <- predict(m, newdata = list(x = xl))
+                segments(xl[1], y.pred[1], xl[2], y.pred[2],
+                         col = 2, lwd = 2, ...)
+            }
+            f2 <- function(...) {
+                m <- lm(y ~ poly(x, degree = as.integer(degree)),
+                        weights = w)
+                x.pred <- seq(xl[1], xl[2], length.out = n)
+                y.pred <- predict(m, newdata = list(x = x.pred))
+                lines(x.pred, y.pred, col = 2, lwd = 2, ...)
+            }
+            cb <- cbind(yy$fit,
+                        yy$fit - 1.96 * yy$se.fit,
+                        yy$fit + 1.96 * yy$se.fit)
+            u <- !is.na(yy$se.fit)
+            plot(x, y, type = "n",
+                 xlim = extendrange(x, f = er),
+                 ylim = extendrange(y, f = er))
+            polygon(c(xx[u], rev(xx[u])),
+                    c(cb[u, 2], rev(cb[u, 3])),
+                    # col = "orange",
+                    col = adjustcolor("orange", alpha.f = 0.5),
+                    border = "gray")
+            lines(xx, cb[, 1])
+            points(x, y, pch = 2 * (!s) + 1, cex = i * 3 * w + 1, ...)
+            abline(v = c(x0, xl), lty = c(2, 3, 3))
+            annotations(m0, y)
+            mtext(side = 3, adj = 1, line = 0.5,
+                  text = sprintf("Number of obs. used/total: %i/%i",
+                                 sum(w > 0), length(y)))
+            switch(findInterval(degree, c(-Inf, 1, 2, Inf)),
+                   `0` = f0(), `1` = f1(), `2` = f2())
+        })
+        panel
+    }
+    xr <- extendrange(x, f = er)
+    panel <- rp.control(x = x, y = y, n = n, er = er)
+    rp.doublebutton(panel, variable = degree, action = draw.loess,
+                    showvalue = TRUE, step = 1, initval = 0,
+                    range = c(0, 2), title = "Degree")
+    rp.slider(panel, variable = x0, action = draw.loess, from = xr[1],
+              to = xr[2], initval = median(range(x)), showvalue = TRUE,
+              title = "x-value")
+    rp.slider(panel, variable = span, action = draw.loess, from = 0,
+              to = 1.5, initval = 0.75, showvalue = TRUE,
+              title = "span")
+    rp.do(panel, action = draw.loess)
+}
+
+rp.loess(x = sui2$hora, y = sui2$temp, er = 0.05)
+
+rp.loess(x = cars$speed, y = cars$dist, n = 25, er = 0.05)
+
+rp.loess(x = faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
 # GAM.
-
-m0 <- gam(cars$dist ~ s(cars$speed))
-predict(m0, se.fit = TRUE)
 
 rp.gam <- function(y, x, er = 0, ...) {
     annotations <- function(m0) {
@@ -468,13 +486,14 @@ rp.gam <- function(y, x, er = 0, ...) {
     rp.do(panel, action = draw.default)
 }
 
-rp.gam(x = cars$speed, y = cars$dist, er = 0.3,
-       xlab = "Velocidade",
-       ylab = "Comprimento")
+rp.gam(x = sui2$hora, y = sui2$temp, er = 0.05)
 
-rp.gam(faithful$eruptions, y = faithful$waiting, er = 0.3)
+rp.gam(x = cars$speed, y = cars$dist, er = 0.05)
+
+rp.gam(faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
+# Funções base para splines.
 
 rp.base <- function(x) {
     draw <- function(panel) {
