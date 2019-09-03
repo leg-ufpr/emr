@@ -50,6 +50,9 @@ navbar:
         - text: Linear2Cubico.R
           href: ./scripts/Linear2Cubico.R
           icon: fa-file
+        - text: Linear2Splines.R
+          href: ./scripts/Linear2Splines.R
+          icon: fa-file
         - text: smooth-regression-panels.R
           href: ./scripts/smooth-regression-panels.R
           icon: fa-file
