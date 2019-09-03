@@ -40,6 +40,9 @@ sui2 <- subset(sui, trat == "Com aspersão")
 
 plot(temp ~ hora, data = sui2)
 
+## modelo a ser batido!!
+with(sui2, abline(h=mean(temp)), lty=3)
+
 #-----------------------------------------------------------------------
 # Conteúdo para usar na explicação.
 
@@ -111,7 +114,7 @@ rp.poly <- function(y, x, er = 0) {
 
 rp.poly(x = sui2$hora, y = sui2$temp, er = 0.3)
 
-rp.poly(x = sui$, y = cars$dist, er = 0.3)
+rp.poly(x = cars$speed, y = cars$dist, er = 0.3)
 
 rp.poly(x = faithful$eruptions, y = faithful$waiting, er = 0.3)
 
