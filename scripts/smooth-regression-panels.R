@@ -98,14 +98,6 @@ rp.poly(x = faithful$eruptions, y = faithful$waiting, er = 0.3)
 #-----------------------------------------------------------------------
 # Local polynomial regression.
 
-y <- cars$dist
-x <- cars$speed
-
-m0 <- loess(y ~ x, family = "gaussian")
-erx <- extendrange(x)
-xx <- seq(min(x), max(x), length.out = 200)
-yy <- predict(m0, newdata = data.frame(x = xx), se = TRUE)
-
 rp.loess <- function(y, x, n = 20, er = 0, ...) {
     annotations <- function(m0, y) {
         mtext(side = 3, adj = 0, line = 1.5,
