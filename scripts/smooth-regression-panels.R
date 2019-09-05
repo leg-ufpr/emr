@@ -22,6 +22,12 @@ library(mgcv)    # Modelos aditivos generalizados: gam().
 library(lattice)      # Gráficos.
 library(latticeExtra) # Complementos para a `lattice`.
 
+#-----------------------------------------------------------------------
+# Prepara conjuntos de dados para conduzir a apresentação.
+
+nile <- data.frame(x = seq_along(Nile), y = as.numeric(Nile))
+plot(y ~ x, nile)
+
 sui <- read.table("http://www.leg.ufpr.br/~walmes/data/preabate.txt",
                   header = TRUE, dec = ",")
 sui$trat <- factor(-1 * sui$trat)
@@ -38,20 +44,36 @@ xyplot(temp ~ hora,
 
 sui2 <- subset(sui, trat == "Com aspersão")
 
+# Modelo a ser batido!!
 plot(temp ~ hora, data = sui2)
-
-## modelo a ser batido!!
-with(sui2, abline(h=mean(temp)), lty=3)
+with(sui2, abline(h = mean(temp)), lty = 3)
 
 #-----------------------------------------------------------------------
-# Conteúdo para usar na explicação.
+# Algumas referências úteis sobre os modelos.
 
+# [PDF] Smoothing splines,Local Regression, and GAMs · Jonathan Taylor.
 browseURL("https://web.stanford.edu/class/stats202/content/lec17.pdf")
+
+# [PDF] Cubic splines.
+browseURL("http://www.maths.lth.se/na/courses/FMN081/FMN081-06/lecture11.pdf")
+
+# [PDF] Natural cubic splines · Arne Morten Kvarving.
+browseURL("https://www.math.ntnu.no/emner/TMA4215/2008h/cubicsplines.pdf")
+
+# [PDF] Nonparametricsmoothing methods · Rob J Hyndman.
+browseURL("https://robjhyndman.com/etc5410/splines.pdf")
+
+# [HTML] Cubic and Smoothing Splines in R · Anish Singh Walia.
 browseURL("https://datascienceplus.com/cubic-and-smoothing-splines-in-r/")
-browseURL("http://stat.snu.ac.kr/idea/seminar/20170703/GAM0703.pdf")
+
+# [PDF] Smoothing Splines.
 browseURL("http://www.stat.cmu.edu/~ryantibs/advmethods/notes/smoothspline.pdf")
+
+# [PDF] Generalized Additive ModelHwang · Charm Lee.
+browseURL("http://stat.snu.ac.kr/idea/seminar/20170703/GAM0703.pdf")
+
+# [PDF] Generalized Additive Models · Michael Clark.
 browseURL("https://m-clark.github.io/docs/GAMS.pdf")
-browseURL("https://www.bristol.ac.uk/media-library/sites/jean-golding-institute/documents/Generalized%20additive%20models%20(2).pdf")
 
 #-----------------------------------------------------------------------
 # (Global) Polynomial regression.
@@ -112,14 +134,16 @@ rp.poly <- function(y, x, er = 0) {
     rp.do(panel, action = draw.poly)
 }
 
-rp.poly(x = sui2$hora, y = sui2$temp, er = 0.3)
+rp.poly(x = sui2$hora, y = sui2$temp, er = 0.1)
 
-rp.poly(x = cars$speed, y = cars$dist, er = 0.3)
+rp.poly(x = nile$x, y = nile$y, er = 0.1)
 
-rp.poly(x = faithful$eruptions, y = faithful$waiting, er = 0.3)
+rp.poly(x = cars$speed, y = cars$dist, er = 0.1)
+
+rp.poly(x = faithful$eruptions, y = faithful$waiting, er = 0.1)
 
 #-----------------------------------------------------------------------
-# Regression splines.
+# Regression splines · Regressão por splines.
 
 rp.spline <- function(x, y, er = 0, ...) {
     plotfit <- function(x, y, m0, er) {
@@ -254,12 +278,14 @@ rp.spline <- function(x, y, er = 0, ...) {
 
 rp.spline(x = sui2$hora, y = sui2$temp, er = 0.05)
 
+rp.spline(x = nile$x, y = nile$y, er = 0.05)
+
 rp.spline(x = cars$speed, y = cars$dist, er = 0.05)
 
 rp.spline(x = faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
-# Smoothing splines.
+# Smoothing splines · Regressão com suavização por splines.
 
 rp.smooth.spline <- function(x, y, er = 0, ...) {
     plotfit <- function(x, y, m0, er, ...) {
@@ -321,12 +347,14 @@ rp.smooth.spline <- function(x, y, er = 0, ...) {
 
 rp.smooth.spline(x = sui2$hora, y = sui2$temp, er = 0.05)
 
+rp.smooth.spline(x = nile$x, y = nile$y, er = 0.05)
+
 rp.smooth.spline(x = cars$speed, y = cars$dist, er = 0.05)
 
 rp.smooth.spline(faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
-# Local polynomial regression.
+# Local regression · Regressão local.
 
 rp.loess <- function(y, x, n = 20, er = 0, ...) {
     annotations <- function(m0, y) {
@@ -420,12 +448,14 @@ rp.loess <- function(y, x, n = 20, er = 0, ...) {
 
 rp.loess(x = sui2$hora, y = sui2$temp, er = 0.05)
 
+rp.loess(x = nile$x, y = nile$y, er = 0.05)
+
 rp.loess(x = cars$speed, y = cars$dist, n = 25, er = 0.05)
 
 rp.loess(x = faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
-# GAM.
+# GAM · Modelos aditivos generalizados.
 
 rp.gam <- function(y, x, er = 0, ...) {
     annotations <- function(m0) {
@@ -491,12 +521,14 @@ rp.gam <- function(y, x, er = 0, ...) {
 
 rp.gam(x = sui2$hora, y = sui2$temp, er = 0.05)
 
+rp.gam(x = nile$x, y = nile$y, er = 0.05)
+
 rp.gam(x = cars$speed, y = cars$dist, er = 0.05)
 
 rp.gam(faithful$eruptions, y = faithful$waiting, er = 0.05)
 
 #-----------------------------------------------------------------------
-# Funções base para splines.
+# Funções inspecionar as bases construidas com splines.
 
 rp.base <- function(x) {
     draw <- function(panel) {
@@ -531,5 +563,85 @@ rp.base <- function(x) {
 
 x <- seq(0, 10, 0.1)
 rp.base(x)
+
+#-----------------------------------------------------------------------
+# Propriedades das bases.
+
+x <- seq(0, 10, by = 0.25)
+
+#--------------------------------------------
+# Polinômio ortogonal.
+
+# Base de termos polinômiais em x com polinômios ortogonais.
+X <- poly(x, degree = 5, raw = FALSE)
+dim(X)
+
+# Matriz X'X ortonormal.
+print.table(crossprod(X), zero.print = ".")
+
+# Gráfico.
+matplot(x, X, type = "l")
+abline(h = 0, lty = 2, col = "orange")
+
+#--------------------------------------------
+# Polinômio natural/ordinário.
+
+# Base de termos polinômiais em x com polinômios ordinários.
+X <- poly(x, degree = 5, raw = TRUE)
+dim(X)
+
+# Matriz X'X não é ortogonal. Pelo contrário. Tem uma condição muito
+# ruim.
+print.table(crossprod(X), zero.print = ".")
+
+# Gráfico.
+matplot(x, X, type = "l")
+abline(h = 0, lty = 2, col = "orange")
+
+#--------------------------------------------
+# Bases com splines cúbicos (base splines).
+
+# Variar o número para `degree`.
+X <- bs(x, df = 5, degree = 1)
+dim(X)
+
+# Um padrão interessante que revela sobreposição entre variáveis
+# vizinhas.
+print.table(crossprod(X), zero.print = ".")
+
+# O gráfico mostra a sobreposição. Sem a sobreposição gradual concorda
+# que não haveria continuidade na função?
+matplot(x, X, type = "l")
+abline(h = 0, lty = 2, col = "orange")
+
+#--------------------------------------------
+# Base splines feitos na mão.
+
+quantile(x, probs = 1:2/3)
+
+ppos_cub <- function(x, c) {
+    (x - c)^3 * c(x > c)
+}
+
+X <- cbind(x, x^2, x^3, ppos_cub(x, 3.33), ppos_cub(x, 6.67))
+dim(X)
+
+# Matriz com uma condição ruim.
+print.table(crossprod(X), zero.print = ".")
+
+# Gráfico é dominado pelos termos cúbicos.
+matplot(x, X, type = "l")
+abline(h = 0, lty = 2, col = "orange")
+
+#--------------------------------------------
+# Bases com natural splines.
+
+X <- ns(x, df = 5)
+dim(X)
+
+print.table(crossprod(X), zero.print = ".")
+
+matplot(x, X, type = "l")
+abline(h = 0, lty = 2, col = "orange")
 
 #-----------------------------------------------------------------------
