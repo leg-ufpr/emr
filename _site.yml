@@ -56,6 +56,9 @@ navbar:
         - text: smooth-regression-panels.R
           href: ./scripts/smooth-regression-panels.R
           icon: fa-file
+        - text: regressao-local.R
+          href: ./scripts/regressao-local.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano
