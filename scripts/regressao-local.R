@@ -60,6 +60,44 @@ with(pred,
               y = cbind(fit, lwr, upr),
               lty = c(1, 2, 2), col = 1))
 
+#-----------------------------------------------------------------------
+# Prever o valor em x = 100.
+
+x0 <- 100
+
+plot(temp ~ hora, data = sui)
+abline(v = x0, col = "orange")
+
+span <- 0.25
+x <- sui$hora
+a <- abs(x - x0)
+
+if (span < 1) {
+    q <- as.integer(span * length(x))
+    d <- sort(a)[q]
+} else {
+    q <- length(x)
+    d <- max(abs(x - x0)) * sqrt(span)
+}
+
+w <- numeric(length(x))
+s <- a <= d
+w[s] <- (1 - (a[s]/d)^3)^3
+i <- as.integer(s)
+w <- w/sum(w) # Mas não precisa somar 1 não.
+
+# Com loess().
+m0 <- loess(temp ~ hora, data = sui, span = span, degree = 1)
+summary(m0)
+predict(m0, newdata = list(hora = x0), se = TRUE)
+
+# Com lm() ponderado.
+m1 <- lm(temp ~ hora, data = sui, weights = w)
+m1 <- lm(temp ~ hora, data = sui[w > 0, ], weights = w[w > 0])
+predict(m1, newdata = list(hora = x0), se.fit = TRUE)
+
+# FIXME: tem algum detalhe faltando para que erro padrão seja o mesmo.
+
 #--------------------------------------------
 # ATTENTION: qual o melhor valor para `span`?
 
@@ -107,5 +145,33 @@ res_m <- aggregate(sqr ~ span, data = res, FUN = mean)
 
 # Traço da soma de quadrados média.
 plot(sqr ~ span, data = res_m, type = "o")
+
+#-----------------------------------------------------------------------
+# Ajuste de regressão local com o valor determinado por CV.
+
+m0 <- loess(temp ~ hora, data = sui, span = 0.15)
+summary(m0)
+
+r <- residuals(m0)
+sum(r^2)
+
+q <- qnorm(0.975)
+pred <- with(sui,
+             data.frame(hora = seq(min(hora),
+                                   max(hora),
+                                   length.out = 201)))
+fits <- predict(m0, newdata = pred, se = TRUE)
+
+pred <- cbind(pred, as.data.frame(fits[1:2]))
+pred <- transform(pred,
+                  lwr = fit - q * se.fit,
+                  upr = fit + q * se.fit)
+str(pred)
+
+plot(temp ~ hora, data = sui)
+with(pred,
+     matlines(x = hora,
+              y = cbind(fit, lwr, upr),
+              lty = c(1, 2, 2), col = 1))
 
 #-----------------------------------------------------------------------

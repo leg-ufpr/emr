@@ -51,7 +51,7 @@ with(sui2, abline(h = mean(temp)), lty = 3)
 #-----------------------------------------------------------------------
 # Algumas referências úteis sobre os modelos.
 
-# [PDF] Smoothing splines,Local Regression, and GAMs · Jonathan Taylor.
+# [PDF] Smoothing splines, Local Regression, and GAMs · Jonathan Taylor.
 browseURL("https://web.stanford.edu/class/stats202/content/lec17.pdf")
 
 # [PDF] Cubic splines.
@@ -68,6 +68,9 @@ browseURL("https://datascienceplus.com/cubic-and-smoothing-splines-in-r/")
 
 # [PDF] Smoothing Splines.
 browseURL("http://www.stat.cmu.edu/~ryantibs/advmethods/notes/smoothspline.pdf")
+
+# [PDF] Local regression · Patrick Breheny.
+browseURL("http://web.as.uky.edu/statistics/users/pbreheny/621/f10/notes/11-4.pdf")
 
 # [PDF] Generalized Additive ModelHwang · Charm Lee.
 browseURL("http://stat.snu.ac.kr/idea/seminar/20170703/GAM0703.pdf")
