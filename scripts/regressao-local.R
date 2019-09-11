@@ -61,15 +61,17 @@ with(pred,
               lty = c(1, 2, 2), col = 1))
 
 #-----------------------------------------------------------------------
-# Prever o valor em x = 100.
+# Prever o valor em x = 102.
 
-x0 <- 100
+x <- seq(Nile)
+y <- as.numeric(Nile)
 
-plot(temp ~ hora, data = sui)
+x0 <- 33
+
+plot(y ~ x)
 abline(v = x0, col = "orange")
 
-span <- 0.25
-x <- sui$hora
+span <- 0.40
 a <- abs(x - x0)
 
 if (span < 1) {
@@ -82,21 +84,53 @@ if (span < 1) {
 
 w <- numeric(length(x))
 s <- a <= d
+# s <- a < d
 w[s] <- (1 - (a[s]/d)^3)^3
 i <- as.integer(s)
-w <- w/sum(w) # Mas não precisa somar 1 não.
+# w <- w/sum(w) # Mas não precisa somar 1 não.
+
+# Proporção de observações na janela.
+sum(s)/length(s)
+
+# Função peso.
+curve((1 - (abs(x0 - x)/d)^3)^3 * (abs((x0 - x)/d) < 1) + 0,
+      from = min(x),
+      to = max(x),
+      col = "purple",
+      lwd = 1.25,
+      n = 201)
+abline(v = x0, col = "orange")
+points(x = x, y = w)
+
+# Função peso sobreposta como adorno ao diagrama de dispersão.
+plot(y ~ x, col = (w > 0) + 1)
+rug(x, ticksize = 0.01)
+abline(v = x0, col = "orange")
+md <- par()$usr[3] * 0.975 + 0.025 * par()$usr[4]
+sc <- 0.25 * diff(par()$usr[3:4])
+curve(md + sc * (1 - (abs(x0 - x)/d)^3)^3 * (abs((x0 - x)/d) < 1) + 0,
+      add = TRUE,
+      col = "purple",
+      lwd = 1.25,
+      n = 201)
 
 # Com loess().
-m0 <- loess(temp ~ hora, data = sui, span = span, degree = 1)
+m0 <- loess(y ~ x,
+            span = span,
+            degree = 2,
+            surface = "direct",
+            normalize = FALSE)
 summary(m0)
-predict(m0, newdata = list(hora = x0), se = TRUE)
+predict(m0, newdata = list(x = x0), se = TRUE)
 
 # Com lm() ponderado.
-m1 <- lm(temp ~ hora, data = sui, weights = w)
-m1 <- lm(temp ~ hora, data = sui[w > 0, ], weights = w[w > 0])
-predict(m1, newdata = list(hora = x0), se.fit = TRUE)
+m1 <- lm(y ~ poly(x, degree = 2), weights = w)
+predict(m1, newdata = list(x = x0), se.fit = TRUE)
 
-# FIXME: tem algum detalhe faltando para que erro padrão seja o mesmo.
+# FIXME: tem algum detalhe faltando para que erro padrão seja o
+# mesmo. Creio que seja o grau de liberdade. E o valor predito não bate
+# em alguns pontos. Ainda está em aberto o algorítmo exato da
+# `loess()`. De qualquer forma, a intuição foi passada.
 
 #--------------------------------------------
 # ATTENTION: qual o melhor valor para `span`?
@@ -145,6 +179,7 @@ res_m <- aggregate(sqr ~ span, data = res, FUN = mean)
 
 # Traço da soma de quadrados média.
 plot(sqr ~ span, data = res_m, type = "o")
+abline(v = 0.15, col = "orange")
 
 #-----------------------------------------------------------------------
 # Ajuste de regressão local com o valor determinado por CV.
@@ -173,5 +208,16 @@ with(pred,
      matlines(x = hora,
               y = cbind(fit, lwr, upr),
               lty = c(1, 2, 2), col = 1))
+
+r <- residuals(m0)
+f <- fitted(m0)
+
+plot(r ~ f)
+abline(h = 0, lty = 2)
+
+plot(abs(r) ~ f)
+
+qqnorm(r)
+qqline(r, lty = 2)
 
 #-----------------------------------------------------------------------
