@@ -74,9 +74,9 @@ cat(paste0("  ",
        [./scripts/Linear2Splines.R](./scripts/Linear2Splines.R).
   10. Qui 05/Set: (WZ) Outros métodos de suavização (smoothing splines, lowess)
   11. Ter 10/Set: (WZ) Fundamentos dos métodos de suavização
-  12. Qui 12/Set: GAM - introdução e dúvidas para avaliação
+  12. Qui 12/Set: Lidando com múltiplas covariáveis, duas esratégias: GAM's e Árvores - introdução.  Dúvidas para avaliação
      * Script para aula <http://faculty.marshall.usc.edu/gareth-james/ISL/Chapter%207%20Lab.txt>
-  13. Ter 17/Set: 1º avaliação (previsto).
+  13. Ter 17/Set: 1º avaliação.
   14. Qui 19/Set:
   15. Ter 24/Set:
   16. Qui 26/Set:
