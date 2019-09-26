@@ -59,6 +59,9 @@ navbar:
         - text: regressao-local.R
           href: ./scripts/regressao-local.R
           icon: fa-file
+        - text: wage.R
+          href: ./scripts/wage.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano
