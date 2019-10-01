@@ -62,6 +62,9 @@ navbar:
         - text: wage.R
           href: ./scripts/wage.R
           icon: fa-file
+        - text: intro-trees.R
+          href: ./scripts/intro-tres.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano

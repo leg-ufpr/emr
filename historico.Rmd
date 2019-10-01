@@ -78,10 +78,11 @@ cat(paste0("  ",
   13. Ter 17/Set: 1º avaliação.
   14. Qui 19/Set: GAM's
        * Script para aula [./scripts/wage.R](./scripts/wage.R).     
-  15. Ter 24/Set:
-  16. Qui 26/Set:
+  15. Ter 24/Set: SIEPE
+  16. Qui 26/Set: SIEPE
   17. Ter 01/Out:
-  18. Qui 03/Out:
+  18. Qui 03/Out: Introdução às árvores de regressão
+       * Script para aula [./scripts/intro-trees.R](./scripts/intro-trees.R).     
   19. Ter 08/Out:
   20. Qui 10/Out:
   21. Ter 15/Out:
