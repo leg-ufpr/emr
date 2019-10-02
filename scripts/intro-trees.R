@@ -15,7 +15,7 @@ aov(O3 ~ cut(temp, c(20, 50, 100)), oztemp)
 aov(O3 ~ cut(temp, c(20, 60, 100)), oztemp)
 aov(O3 ~ cut(temp, c(20, 70, 100)), oztemp)
 
-m <- aov(O3 ~ cut(temp, c(20, 50, 100)), oztemp)
+m <- aov(O3 ~ cut(temp, c(20, 70, 100)), oztemp)
 names(m)
 anova(m)
 names(anova(m))
@@ -40,6 +40,7 @@ rss1 <- with(oztemp, sapply(cortes, rssC, y=O3, x=temp))
 
 plot(cortes, rss1, type="b")
 (c1 <- cortes[which.min(rss1)])
+(c1 <- rss1[which.min(rss1)])
 
 with(oztemp, plot(O3 ~temp))
 
@@ -63,6 +64,7 @@ rss1.1 <- with(oztemp1.1, sapply(cortes1.1, rssC, y=O3, x=temp))
 
 plot(cortes1.1, rss1.1, type="b")
 (c1.1 <- cortes1.1[which.min(rss1.1)])
+(rss1.1 <- rss1.1[which.min(rss1.1)])
 
 (fit1.1 <- lm(O3 ~ ifelse(temp < c1.1, 0, 1), data=oztemp1.1))
 noztemp1.1 <- with(oztemp1.1, data.frame(temp=seq(min(temp), max(temp), l=501)))
@@ -78,6 +80,7 @@ rss1.2 <- with(oztemp1.2, sapply(cortes1.2, rssC, y=O3, x=temp))
 
 plot(cortes1.2, rss1.2, type="b")
 (c1.2 <- cortes1.2[which.min(rss1.2)])
+(rss1.2 <- rss1.2[which.min(rss1.2)])
 
 (fit1.2 <- lm(O3 ~ ifelse(temp < c1.2, 0, 1), data=oztemp1.2))
 noztemp1.2 <- with(oztemp1.2, data.frame(temp=seq(min(temp), max(temp), l=501)))
@@ -97,6 +100,8 @@ fit <- rpart(O3 ~ temp, data=oztemp)
 #fit <- rpart(O3 ~ temp, control = rpart.control(cp = 0.05), data=oztemp)
 #fit <- rpart(O3 ~ temp, control = rpart.control(cp = 0.01), data=oztemp)
 rpart.plot(fit, main = 'Árvore de regressão')
+plot(fit)
+text(fit)
 
 with(oztemp, plot(O3 ~ temp))
 
