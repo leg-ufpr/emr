@@ -80,9 +80,9 @@ cat(paste0("  ",
        * Script para aula [./scripts/wage.R](./scripts/wage.R).     
   15. Ter 24/Set: SIEPE
   16. Qui 26/Set: SIEPE
-  17. Ter 01/Out: Introdução às árvores de regressão
+  17. Ter 01/Out: Introdução às árvores de regressão: descrição com uma covariável
        * Script para aula [./scripts/intro-trees.R](./scripts/intro-trees.R).     
-  18. Qui 03/Out: Árvores de regressão
+  18. Qui 03/Out: Árvores de regressão. Árvores com mais de uma covariável e poda
        * Script para aula [./scripts/script-CART.R](./scripts/script-CART.R).     
        * Material usado:
          <http://www.leg.ufpr.br/~paulojus/CE092/Aula2018_Arvores.pdf>.

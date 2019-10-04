@@ -63,7 +63,10 @@ navbar:
           href: ./scripts/wage.R
           icon: fa-file
         - text: intro-trees.R
-          href: ./scripts/intro-tres.R
+          href: ./scripts/intro-trees.R
+          icon: fa-file
+        - text: script-CART.R
+          href: ./scripts/script-CART.R
           icon: fa-file
   right:
     - icon: fa-user
