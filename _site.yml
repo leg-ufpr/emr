@@ -65,6 +65,9 @@ navbar:
         - text: intro-trees.R
           href: ./scripts/intro-trees.R
           icon: fa-file
+        - text: intro-trees-class.R
+          href: ./scripts/intro-trees-class.R
+          icon: fa-file
         - text: script-CART.R
           href: ./scripts/script-CART.R
           icon: fa-file

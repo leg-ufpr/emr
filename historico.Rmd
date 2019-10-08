@@ -88,6 +88,7 @@ cat(paste0("  ",
          <http://www.leg.ufpr.br/~paulojus/CE092/Aula2018_Arvores.pdf>.
   19. Ter 08/Out: (PJ) Mais sobre árvores de regressão e árvores de classificação
        * Script foi atualizado! [./scripts/intro-trees.R](./scripts/intro-trees.R).     
+       * Script com exemplo de classificação [./scripts/intro-trees-class.R](./scripts/intro-trees-class.R).     
   20. Qui 10/Out:
   21. Ter 15/Out:
   22. Qui 17/Out:
