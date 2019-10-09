@@ -1,21 +1,35 @@
+#-----------------------------------------------------------------------
+# Extensões de modelos de regressão · CE 092
+# web.leg.ufpr.br/ensino/EMR
+#
+#                                            Prof. Dr. Walmes M. Zeviani
+#                                       Prof. Dr. Paulo Justiniano R. Jr
+# Comandos copiados/adaptados de Faraway 
+# https://people.bath.ac.uk/jjf23/ELM/
+#
+#                      Laboratory of Statistics and Geoinformation (LEG)
+#                Department of Statistics · Federal University of Paraná
+#                                       2019-Out-10 · Curitiba/PR/Brazil
+#-----------------------------------------------------------------------
+
 ##
 ## Intro a árvores de classificação
 ##
 
 ## Exemplo:
-## motivação: redizer a espécie de um particular espécime de canguru de um museu
-## opção de 3 espécias e Macho/Femea
+## motivação: predizer a espécie de um particular espécime de canguru de um museu
+## opção de 3 espécies e Macho/Femea
 ## aqui considera apenas a classificação da espécie
 ## preditoras são medidas de crânio
 data(kanga, package="faraway")
 ## exemplar que se deseja classificar:
 x0 <- c(1115,NA,748,182,NA,NA,178,311,756,226,NA,NA,NA,48,1009,NA,204,593)
 ##notar missing
-## duas opções: arvore que inclui attributos missing
-##              arvores só com observações disponíveis
-## escolha racai sobre possível "informatividade do missing
+## duas opções: árvore que inclui attributos missing
+##              arvore só com observações disponíveis
+## escolha racai sobre possível "informatividade" do missing
 
-## opção aqui: excluir as variáveis faltantes no exemplar a sr classificado
+## opção aqui: excluir as variáveis faltantes no exemplar a ser classificado
 ## e tb "sexo"
 kanga <- kanga[,c(T,F,!is.na(x0))]
 head(kanga)
@@ -27,11 +41,11 @@ apply(kanga,2,function(x) sum(is.na(x)))
 ## 1. discretizar variável e missing como um nível
 ##    - adequado se suspeitar ser informativo
 ## 2. imputação
-##   - pode introduzi vícios...
+##   - pode introduzir vícios...
 ## 3. Construir a árvore normalmente ignorando missing.
 ##   - quando for classificar e encontrar missing há das opções:
 ##      I. tomar a classe com maioria de votos
-##     II. utilizar "surrogate" (ver summary()"
+##     II. utilizar "surrogate" (ver summary())
 
 ## vamos examinar mais de perto as variáveis faltantes.
 plot(na.omit(kanga)[,-1]) ## ver relações com palate.width e mandible.length
@@ -45,7 +59,7 @@ dim(na.omit(kanga))             ## remover os NA's
 df <- na.omit(kanga[,-c(4,10)])
 
 ## uma visualização 
-ggplot2:::ggplot(df,
+ggplot2::ggplot(df,
        aes(x=zygomatic.width, y=foramina.length, shape=species, color=species)) +
     geom_point() +
     theme(legend.position = "top", legend.direction = "horizontal",
@@ -57,6 +71,7 @@ require(rpart)
 require(rpart.plot)
 fitK <- rpart(species ~ ., data=df,cp=0.001)
 printcp(fitK)
+plotcp(fitK)
 rpart.plot(fitK)
 
 (fitKp <- prune(fitK,cp=0.01))
@@ -68,11 +83,11 @@ text(fitKp)
 1-sum(diag(tt))/sum(tt)  ## taxa de erro
 
 ## Obs:
-## tamanho pode ser confunfidor (sexo) e atraaplhar as classificações
+## tamanho pode ser confundidor (sexo) e atraapalhar as classificações
 ## há muita redundância e relações entre variáveis
 ## - algorítmos podem incluir combinações lineares
-## - aqui vamos utilizar compomentes principais das classificadoas uma vez
-##  que o foco não é na interpretabilidade
+## - aqui vamos utilizar compomentes principais das classificadas, 
+##  considerando que o foco é a predição e não a interpretabilidade
 
 pcK <- princomp(df[,-1])
 ## montando novo data-frame de "dados"

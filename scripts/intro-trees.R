@@ -5,7 +5,7 @@
 #                                            Prof. Dr. Walmes M. Zeviani
 #                                       Prof. Dr. Paulo Justiniano R. Jr
 # Parte dos comandos copiada/adaptada de Faraway 
-# ttps://people.bath.ac.uk/jjf23/ELM/
+# https://people.bath.ac.uk/jjf23/ELM/
 #
 #                      Laboratory of Statistics and Geoinformation (LEG)
 #                Department of Statistics · Federal University of Paraná
@@ -17,7 +17,7 @@
 oldpar <- par(no.readonly=TRUE)
 #rm(list=ls())
 ##
-## Selecionando pacote e base de dados para ser utilizada como exemplo
+## Selecionando base de dados para ser utilizada como exemplo
 ##
 data(ozone, package="faraway")
 head(ozone)
@@ -33,13 +33,19 @@ with(ozone, plot(O3 ~ temp))
 oztemp <- ozone[, c("O3", "temp")]
 oztemp <- with(oztemp, oztemp[order(temp),])
 
-## Ajustes de médias por seggmentos para alguns pontos de corte
+## A idéia é começar dividindo os dados em dois grupos
+## como a covariável é numérica os grupos são definidos por algum "ponto de corte" desta (co)variável
+
+## Vamos inicialmente ver a intuição sobre como se escolhe o ponto de corte
+## Para isto vamos considerar inicialmente apenas 3 possíveis pontos de corte: 50, 60 ou 70
+## Ajustes de médias por segmentos para alguns (3) pontos de corte
 aov(O3 ~ 1, oztemp)
 aov(O3 ~ cut(temp, c(20, 50, 100)), oztemp)
 aov(O3 ~ cut(temp, c(20, 60, 100)), oztemp)
 aov(O3 ~ cut(temp, c(20, 70, 100)), oztemp)
 
-## dentre as opções acima 70 parece ser o melhor. Vamos ver como extrair informações
+## dentre as opções acima 70 parece ser o melhor.
+## Vamos ver como extrair informações
 ## relevantes da aov() em especial a soma de quadrados
 m <- aov(O3 ~ cut(temp, c(20, 70, 100)), oztemp)
 names(m)
@@ -79,14 +85,16 @@ plot(cortes, rss1, type="b")
 
 ## visualizando o modelo com o 1o corte
 with(oztemp, plot(O3 ~ temp))
-#oztemp <- transform(oztemp, I1 = ifelse(temp < c1, 0, 1))
-#(fit1 <- lm(O3 ~ I1, data=oztemp))
 (fit1 <- lm(O3 ~ ifelse(temp < c1, 0, 1), data=oztemp))
 noztemp <- with(oztemp, data.frame(temp=seq(min(temp), max(temp), l=501)))
 noztemp <- transform(noztemp, y1 = predict(fit1, newdata=noztemp))
 
 with(noztemp, lines(y1 ~ temp, col=2))
 
+
+## portanto obtivemos a primeira partição da árvore
+## O particionamento recursivo seguem então particionando da mesma forma cada uma das
+## partições anteriormente criadas
 
 ## Partições em segundo nível
 
@@ -140,11 +148,13 @@ require(rpart.plot)
 ## obtendo a árvore com opções "default" do pacote
 fit <- rpart(O3 ~ temp, data=oztemp)
 ## visualizações alternativas do ajuste
+par(mfrow=c(1,2), mar=c(1,1, 0, 0))
 plot(fit)
 text(fit)
 plot(fit, uniform=TRUE)
 text(fit)
-## ... e por coincidência foi ajustada uma árvore apenas em dóis níveis!
+## ... e por coincidência foi ajustada uma árvore apenas em dois níveis!
+par(par.ori)
 
 ## Saída que descreve a árvore e partições
 ## verificar valores em relação aos obtidos anteriormente!!!
@@ -165,16 +175,15 @@ lines(grid, predict(fit,
 ## tal como obtivemos anteriormente!!
 
 
-## Vamos agora forçar mais divisoes
+## Vamos agora forçar mais divisões
 fit <- rpart(O3 ~ temp, control = rpart.control(cp = 0.001), data=oztemp)
 plot(fit)
 fit
-
 ##
 printcp(fit)
 plotcp(fit)
 
-## uma pode "arbitrária"
+## uma poda "arbitrária"
 fit1 <- prune.rpart(fit,0.005)
 plot(fit1)
 
@@ -185,18 +194,21 @@ plot(fit1)
 
 ## Intuitivamente a função de custo/;complexidade é uma expécia de análogo
 ## a critérios como AIC e semilates
-## ... enquanto que o parâmetro \alpha é análogo a paãmostros que definem
-## um grau de suavização me métodos suavizadores
+## ... enquanto que o parâmetro \alpha é análogo a parâmetros que definem
+## um grau de suavização em métodos suavizadores
 
 
 ##
 ## Análises com duas covariáveis
 ##
 (fit2 <- rpart(O3 ~ temp + humidity,ozone))
+## veja o resultado acima e "desenhe" a árvore voce mesmo!
+## ...
+## ... e veja se bate com a retornada pela função!
 plot(fit2)
 text(fit2)
 
-## 
+## Visualização das partições efetuadas pela árvore no espaço das covariáveis
 x11()
 with(ozone, plot(humidity ~temp))
 abline(v=67.5, lty=1, lwd=2)                            # 1o nivel
@@ -205,12 +217,13 @@ abline(v=79.5, lty=2, col=2, lwd=2)                     # 2o nivel
 segments(67.5, 59.5, 79.5, 59.5, lty=3, col=4, lwd=2)   # 3o nivel
 dev.off()
 
-
+## extendendo a árvore para melhor inspecionar o tamanho a ser escolhido
 (fit2 <- rpart(O3 ~ temp + humidity, , control = rpart.control(cp = 0.005), data=ozone))
 #(fit2 <- rpart(O3 ~ temp + humidity, , control = rpart.control(cp = 0.001), data=ozone))
 plot(fit2)
 text(fit2)
 plotcp(fit2)
+printcp(fit2)
 ##
 ## etc etc etc ... qual árvore vc escolheria?
 ##
@@ -222,13 +235,14 @@ plotcp(fit2)
 ##...
 ##...
 ## e depois confira:
+par(mfrow=c(1,2), mar=c(1,1, 0, 0))
 plot(fitall)
 text(fitall)
-
 plot(fitall,compress=T,uniform=T,branch=0.4)
 text(fitall)
+par(par.ori)
 
-## gráficos diagnóstico usuais (como em regressão são possíveis)
+## gráficos diagnóstico usuais (são possíveis de obter como em regressão)
 plot(jitter(predict(fitall)),residuals(fitall),xlab="Fitted",ylab="Residuals")
 abline(h=0)
 qqnorm(residuals(fitall))
@@ -239,7 +253,7 @@ qqline(residuals(fitall))
 (x0 <- apply(ozone[,-1],2,median))
 predict(fitall,data.frame(t(x0)))
 
-## vamos inversitgas a árvore em mais detalhes
+## vamos investigar a árvore em mais detalhes
 ## será tulizazada validação cruzada.
 ## Vamos então adotar uma semente comum para todos
 set.seed(2019)
@@ -252,13 +266,15 @@ rpart.plot(fitall, type=3)
 fitallr <- prune.rpart(fitall,0.02)
 rpart.plot(fitallr, type=3)
 
-## quanlidade do ajuste (equivalente a um R^2)
+## qualidade do ajuste (equivalente a um R^2)
 1-sum(residuals(fitallr)^2)/sum((ozone$O3-mean(ozone$O3))^2)
 
-## instabilidade ...
+## instabilidade ... das árvores
 set.seed(123)
 fitall <- rpart(O3 ~ ., ozone[sample(330,165),])
 (fitalls <- prune.rpart(fitall,0.02))
 x11()
 rpart.plot(fitalls, type=3)
+# A retirada de apenas dois dados alterou a árvore
 
+## Tal fato motiva outros algorítmos (random forest etc) para obter predições mais "robustas"
