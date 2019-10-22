@@ -77,21 +77,27 @@ cat(paste0("  ",
   12. Qui 12/Set: Lidando com múltiplas covariáveis, duas esratégias: GAM's e Árvores - introdução.  Dúvidas para avaliação
   13. Ter 17/Set: (PJ) 1º avaliação.
   14. Qui 19/Set: (PJ) GAM's
-       * Script para aula [./scripts/wage.R](./scripts/wage.R).     
+      * Script para aula [./scripts/wage.R](./scripts/wage.R).
   15. Ter 24/Set: SIEPE
   16. Qui 26/Set: SIEPE
   17. Ter 01/Out: (PJ) Introdução às árvores de regressão: descrição com uma covariável
-       * Script para aula [./scripts/intro-trees.R](./scripts/intro-trees.R).     
+      * Script para aula [./scripts/intro-trees.R](./scripts/intro-trees.R).
   18. Qui 03/Out: (PJ) Árvores de regressão. Árvores com mais de uma covariável e poda
-       * Script para aula [./scripts/script-CART.R](./scripts/script-CART.R).     
-       * Material usado:
-         <http://www.leg.ufpr.br/~paulojus/CE092/Aula2018_Arvores.pdf>.
+      * Script para aula [./scripts/script-CART.R](./scripts/script-CART.R).
+      * Material usado:
+        <http://www.leg.ufpr.br/~paulojus/CE092/Aula2018_Arvores.pdf>.
   19. Ter 08/Out: (PJ) Mais sobre árvores de regressão e árvores de classificação
-       * Script foi atualizado! [./scripts/intro-trees.R](./scripts/intro-trees.R).     
-       * Script com exemplo de classificação [./scripts/intro-trees-class.R](./scripts/intro-trees-class.R).     
-  20. Qui 10/Out:
-  21. Ter 15/Out:
-  22. Qui 17/Out:
+      * Script foi atualizado! [./scripts/intro-trees.R](./scripts/intro-trees.R).
+      * Script com exemplo de classificação [./scripts/intro-trees-class.R](./scripts/intro-trees-class.R).
+  20. Qui 10/Out: (WZ) Visão geral de métodos baseados em árvores.
+      * Bagging, randon forest, boosting.
+      * <http://leg.ufpr.br/~walmes/ensino/ML/tutorials/04-regression-trees.html>.
+  21. Ter 15/Out: (WZ) Introdução aos modelos de regressão não linear.
+      * Aspectos motivacionais.
+      * Definição e formulação.
+      * Interpretação dos parâmetros.
+  22. Qui 17/Out: (WZ) Modelos de regressão não linear.
+      * Parametrizações em modelos não lineares.
   23. Ter 22/Out:
   24. Qui 24/Out:
   25. Ter 29/Out:
