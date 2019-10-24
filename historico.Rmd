@@ -98,8 +98,19 @@ cat(paste0("  ",
       * Interpretação dos parâmetros.
   22. Qui 17/Out: (WZ) Modelos de regressão não linear.
       * Parametrizações em modelos não lineares.
-  23. Ter 22/Out:
-  24. Qui 24/Out:
+  23. Ter 22/Out: (WZ) Ajuste de modelos não lineares no R.
+      * Uso da função `nls()`: argumentos, acionamento, funcionamento e
+        resultados.
+      * Interpretação dos resultados: medidas de ajuste, estimativas
+        pontuais e intervalares, predição.
+      * Obtenção de intervalos de confiança para a predição via
+        implementação do método delta.
+  24. Qui 24/Out: (WZ) Ajuste de modelos não lineares para dados com
+      estrutura de fatores.
+      * Uso da função `nlme::nlsList()` e `nlme::gnls()`.
+      * Testes de hipótese para os parâmetros do modelo.
+      * Ajuste de modelos encaixados.
+      * Confeção das bandas de confiança pelo método delta.
   25. Ter 29/Out:
   26. Qui 31/Out:
   27. Ter 05/Nov: 2º avaliação (previsto).
