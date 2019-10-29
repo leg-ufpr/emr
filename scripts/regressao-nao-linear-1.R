@@ -65,6 +65,10 @@ xyplot(Gain ~ A, data = turk0)+
 # Baseado na log-verossimilhança.
 confint(n0)
 
+par(mfrow = c(2, 2))
+plot(profile(n0))
+layout(1)
+
 # Baseado na aproximação quadrática da verossimilhança, conhecido como
 # intervalos de Wald ou assintóticos. São simétricos por construção.
 confint.default(n0)
@@ -265,6 +269,85 @@ xyplot(umrel ~ tempo | nome, data = sec)
 # th1: assíntota superior.
 # th2: tempo para evaporar metade do conteúdo total de água.
 # th3: proporcional à taxa máxima do processo.
+
+n0 <- nls(umrel ~ th1/(1 + exp(-(tempo - th2)/th3)),
+          data = subset(sec, nome == "LVAd-A"),
+          start = list(th1 = 1,
+                       th2 = 15,
+                       th3 = 5),
+          trace = TRUE)
+
+# Usando funções self start.
+n1 <- nls(umrel ~ SSlogis(tempo, th1, th2, th3),
+          data = subset(sec, nome == levels(nome)[4]),
+          trace = TRUE)
+
+apropos("^SS", ignore.case = FALSE)
+
+# Modelo Gompertz.
+n2 <- nls(umrel ~ SSgompertz(tempo, tha, th2, th3),
+          data = subset(sec, nome == levels(nome)[4]),
+          trace = TRUE)
+
+logLik(n1)
+logLik(n2)
+
+# Para verificar o ajuste.
+pred <- data.frame(tempo = seq(0, 80, 1))
+pred$y1 <- predict(n1, newdata = pred)
+pred$y2 <- predict(n2, newdata = pred)
+
+plot(umrel ~ tempo, data = subset(sec, nome == levels(nome)[4]),
+     xlim = c(0, 80), ylim = c(0, 1.2))
+with(pred, {
+    lines(tempo, y1, col = "orange")
+    lines(tempo, y2, col = "purple")
+})
+
+1 - deviance(n1)/deviance(lm(umrel ~ 1, subset(sec, nome == levels(nome)[4])))
+1 - deviance(n2)/deviance(lm(umrel ~ 1, subset(sec, nome == levels(nome)[4])))
+
+help(SSgompertz, h = "html")
+
+library(nlstools)
+ls("package:nlstools")
+
+# Contornos de soma de quadrados de resíduos.
+confrss <- nlsContourRSS(n1)
+plot(confrss)
+
+x11()
+confrss <- nlsContourRSS(n2)
+plot(confrss)
+
+conf <- nlsConfRegions(n1)
+plot(conf)
+
+x11()
+conf <- nlsConfRegions(n2)
+plot(conf)
+
+# Bootstrap.
+b <- nlsBoot(n1)
+summary(b)
+
+# Jackknife.
+j <- nlsJack(n1)
+summary(j)
+
+library(nls2)
+
+my_tries <- expand.grid(th1 = seq(0.9, 1.1, length.out = 6),
+                        th2 = seq(7, 20, length.out = 6),
+                        th3 = seq(2, 18, length.out = 6))
+my_tries
+
+n_try <- nls2(umrel ~ th1/(1 + exp(-(tempo - th2)/th3)),
+              data = subset(sec, nome == "LVAd-A"),
+              algorithm = "brute-force",
+              start = my_tries)
+
+n_try
 
 #=======================================================================
 # Exemplo 4. Curva de produção em função da desfolha do algodão.

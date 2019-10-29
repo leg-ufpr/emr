@@ -189,6 +189,8 @@ n3 <- update(n2,
 # Teste da razão de verossimilhanças entre modelos encaixados.
 anova(n3, n2)
 
+anova(n3, type = "marginal")
+
 #-----------------------------------------------------------------------
 # Fazer a banda de confiança para o modelo `n1`.
 
