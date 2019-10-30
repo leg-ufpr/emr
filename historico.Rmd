@@ -111,7 +111,12 @@ cat(paste0("  ",
       * Testes de hipótese para os parâmetros do modelo.
       * Ajuste de modelos encaixados.
       * Confeção das bandas de confiança pelo método delta.
-  25. Ter 29/Out:
+  25. Ter 29/Out: (WZ) Recursos adicionais para ajuste e inferência em
+      modelos não lineares.
+      * Funções self-start para valores iniciais.
+      * Procura extensiva em grid.
+      * Regiões de confiança conjunta.
+      * Intervalos de confiança baseados em métodos de reamostragem.
   26. Qui 31/Out:
   27. Ter 05/Nov: 2º avaliação (previsto).
   28. Qui 07/Nov:
