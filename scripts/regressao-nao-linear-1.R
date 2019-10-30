@@ -43,7 +43,7 @@ xyplot(Gain ~ A, data = turk0, type = c("p", "smooth"))
 start <- list(th0 = 625, th1 = 800 - 625, th2 = 0.1)
 
 xyplot(Gain ~ A, data = turk0) +
-    layer(panel.curve(th0 + th1 * x/(th2 + x)),
+    layer(panel.curve(th0 + th1 * x/(th2 + x), lty = 2),
           data = start)
 
 #-----------------------------------------------------------------------
@@ -65,6 +65,7 @@ xyplot(Gain ~ A, data = turk0)+
 # Baseado na log-verossimilhança.
 confint(n0)
 
+# Gráfico dos perfils.
 par(mfrow = c(2, 2))
 plot(profile(n0))
 layout(1)
@@ -148,10 +149,11 @@ xyplot(C ~ Temp, data = segreg, type = c("p", "smooth"))
 # Ajuste do modelo platô linear.
 # f(x) = th0 + th1 * (x - th2) * (x >= th2) + 0 * (x < th2)
 
+# Inspeciona valores iniciais.
 start <- list(th0 = 75, th1 = 0.5, th2 = 50)
 xyplot(C ~ Temp, data = segreg) +
     layer(panel.curve(th0 + th1 * (x - th2) * (x >= th2) +
-                      0 * (x < th2)), data = start)
+                      0 * (x < th2), lty = 2), data = start)
 
 # Ajuste. TIP: o ponto de quebra é desconhecido.
 n2 <- nls(C ~ th0 + th1 * (Temp - th2) * (Temp >= th2) +
@@ -169,7 +171,7 @@ confint.default(n2)
 # Observados e preditos.
 xyplot(C ~ Temp, data = segreg) +
     layer(panel.curve(th0 + th1 * (x - th2) * (x >= th2) +
-                      0 * (x < th2), col = 4),
+                      0 * (x < th2), col = 2),
           data = as.list(coef(n2)))
 
 #-----------------------------------------------------------------------
@@ -250,8 +252,6 @@ xyplot(C ~ Temp, data = segreg) +
 #=======================================================================
 # Exemplo 3. Curva de secagem do solo.
 
-# TIP: escolha um dos níveis de solo.
-
 sec <- read.table("http://www.leg.ufpr.br/~walmes/data/emr11.txt",
                   header = TRUE,
                   sep = "\t",
@@ -270,8 +270,11 @@ xyplot(umrel ~ tempo | nome, data = sec)
 # th2: tempo para evaporar metade do conteúdo total de água.
 # th3: proporcional à taxa máxima do processo.
 
+sec_sub <- subset(sec, nome == "LVAd-A")
+plot(umrel ~ tempo, data = sec_sub)
+
 n0 <- nls(umrel ~ th1/(1 + exp(-(tempo - th2)/th3)),
-          data = subset(sec, nome == "LVAd-A"),
+          data = sec_sub,
           start = list(th1 = 1,
                        th2 = 15,
                        th3 = 5),
@@ -279,16 +282,18 @@ n0 <- nls(umrel ~ th1/(1 + exp(-(tempo - th2)/th3)),
 
 # Usando funções self start.
 n1 <- nls(umrel ~ SSlogis(tempo, th1, th2, th3),
-          data = subset(sec, nome == levels(nome)[4]),
+          data = sec_sub,
           trace = TRUE)
 
+# Funções self start disponíveis.
 apropos("^SS", ignore.case = FALSE)
 
-# Modelo Gompertz.
+# Modelo de Gompertz.
 n2 <- nls(umrel ~ SSgompertz(tempo, tha, th2, th3),
-          data = subset(sec, nome == levels(nome)[4]),
+          data = sec_sub,
           trace = TRUE)
 
+# Compara os ajustes pela log-verossimilhança.
 logLik(n1)
 logLik(n2)
 
@@ -297,35 +302,103 @@ pred <- data.frame(tempo = seq(0, 80, 1))
 pred$y1 <- predict(n1, newdata = pred)
 pred$y2 <- predict(n2, newdata = pred)
 
-plot(umrel ~ tempo, data = subset(sec, nome == levels(nome)[4]),
-     xlim = c(0, 80), ylim = c(0, 1.2))
+plot(umrel ~ tempo,
+     data = sec_sub,
+     xlim = c(0, 80),
+     ylim = c(0, 1.2))
 with(pred, {
     lines(tempo, y1, col = "orange")
     lines(tempo, y2, col = "purple")
 })
 
-1 - deviance(n1)/deviance(lm(umrel ~ 1, subset(sec, nome == levels(nome)[4])))
-1 - deviance(n2)/deviance(lm(umrel ~ 1, subset(sec, nome == levels(nome)[4])))
+# Coeficiente de determinação.
+dev_null <- deviance(lm(umrel ~ 1, sec_sub))
+1 - deviance(n1)/dev_null
+1 - deviance(n2)/dev_null
 
+# Documentação do modelo Gompertz.
 help(SSgompertz, h = "html")
+
+#-----------------------------------------------------------------------
+# Recursos adicionais para modelos não lineares.
 
 library(nlstools)
 ls("package:nlstools")
 
+# Gráfico dos resíduos (substitui a `as.lm()`).
+res <- nlsResiduals(n2)
+plot(res)
+
 # Contornos de soma de quadrados de resíduos.
-confrss <- nlsContourRSS(n1)
-plot(confrss)
+rss1 <- nlsContourRSS(n1)
+plot(rss1, col.pal = topo.colors(100))
 
 x11()
-confrss <- nlsContourRSS(n2)
-plot(confrss)
+rss2 <- nlsContourRSS(n2)
+plot(rss2, col.pal = topo.colors(100))
 
-conf <- nlsConfRegions(n1)
-plot(conf)
+# Fecha as janelas gráficas abertas.
+graphics.off()
+
+# Região de confiança conjunta por aceitação-rejeição.
+conf1 <- nlsConfRegions(n1, exp = 2, length = 3000)
+plot(conf1)
 
 x11()
-conf <- nlsConfRegions(n2)
-plot(conf)
+conf2 <- nlsConfRegions(n2, exp = 2, length = 3000)
+plot(conf2)
+
+# Fecha as janelas gráficas abertas.
+graphics.off()
+
+# Usando gráficos em 3D.
+library(rgl)
+
+x_col <- (conf1$rss - min(conf1$rss))/(conf1$rss95 - min(conf1$rss))
+colorfunc <- colorRamp(RColorBrewer::brewer.pal(7, "Spectral"))
+colors <- rgb(colorfunc(x_col), maxColorValue = 255)
+
+plot3d(x = conf1$cr[, 1],
+       y = conf1$cr[, 2],
+       z = conf1$cr[, 3],
+       col = colors,
+       type = "s",
+       radius = 0.05)
+rgl.points(x = conf1$cr[, 1],
+           y = conf1$cr[, 2],
+           z = min(conf1$cr[, 3]),
+           col = colors)
+rgl.points(x = conf1$cr[, 1],
+           y = min(conf1$cr[, 2]),
+           z = conf1$cr[, 3],
+           col = colors)
+rgl.points(x = min(conf1$cr[, 1]),
+           y = conf1$cr[, 2],
+           z = conf1$cr[, 3],
+           col = colors)
+
+x_col <- (conf2$rss - min(conf2$rss))/(conf2$rss95 - min(conf2$rss))
+colorfunc <- colorRamp(RColorBrewer::brewer.pal(7, "Spectral"))
+colors <- rgb(colorfunc(x_col), maxColorValue = 255)
+
+plot3d(x = conf2$cr[, 1],
+       y = conf2$cr[, 2],
+       z = conf2$cr[, 3],
+       col = colors,
+       type = "s",
+       radius = 0.005)
+rgl.points(x = conf2$cr[, 1],
+           y = conf2$cr[, 2],
+           z = min(conf2$cr[, 3]),
+           col = colors)
+rgl.points(x = conf2$cr[, 1],
+           y = min(conf2$cr[, 2]),
+           z = conf2$cr[, 3],
+           col = colors)
+rgl.points(x = min(conf2$cr[, 1]),
+           y = conf2$cr[, 2],
+           z = conf2$cr[, 3],
+           col = colors)
 
 # Bootstrap.
 b <- nlsBoot(n1)
@@ -335,19 +408,32 @@ summary(b)
 j <- nlsJack(n1)
 summary(j)
 
+# Até aqui, quantas diferentes formas de obter o intervalo de confiança
+# foram vistas?
+#   * confint(n1)         : Baseado em perfil da verossimilhança.
+#   * confint.default(n1) : Assintótico.
+#   * summary(b)          : Bootstrap percentílico.
+#   * summary(j)          : Jackknife.
+
 library(nls2)
 
+# Cria grid para busca exaustiva (grid search)
 my_tries <- expand.grid(th1 = seq(0.9, 1.1, length.out = 6),
                         th2 = seq(7, 20, length.out = 6),
-                        th3 = seq(2, 18, length.out = 6))
+                        th3 = seq(2, 18, length.out = 6),
+                        KEEP.OUT.ATTRS = FALSE)
 my_tries
 
+# `grid-search` e `brute-force` representam a mesma coisa.
 n_try <- nls2(umrel ~ th1/(1 + exp(-(tempo - th2)/th3)),
               data = subset(sec, nome == "LVAd-A"),
-              algorithm = "brute-force",
+              # algorithm = "brute-force",
+              algorithm = "grid-search",
               start = my_tries)
-
 n_try
+
+# Usar esses valores como chutes iniciais para a `nls()`.
+start <- as.list(coef(n_try))
 
 #=======================================================================
 # Exemplo 4. Curva de produção em função da desfolha do algodão.
