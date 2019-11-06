@@ -117,9 +117,9 @@ cat(paste0("  ",
       * Procura extensiva em grid.
       * Regiões de confiança conjunta.
       * Intervalos de confiança baseados em métodos de reamostragem.
-  26. Qui 31/Out:
-  27. Ter 05/Nov: 2º avaliação (previsto).
-  28. Qui 07/Nov:
+  26. Qui 31/Out:(PJ) Modelos com dependência entre observações. Três formas de induzir dependência (transição, marginal e efeitos aleatórios). Introdução aos modelos de efeitos aleatórios
+  27. Ter 05/Nov: (PJ/WZ) Modelos de efeitos aleatórios - forma geral, inferência, construção das matrizes. Exemplo. 
+  28. Ter 07/Nov: 2º avaliação.
   29. Ter 12/Nov:
   30. Qui 14/Nov:
   31. Ter 19/Nov:

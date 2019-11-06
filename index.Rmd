@@ -43,11 +43,11 @@ output:
   4. Modelos de regressão local
   5. Modelos de regressão de splines
   6. Modelos aditivos generalizados
-  7. Modelos não lineares
-  8. Modelos de regressão com erros não IID
-  9. Modelos de efeitos aleatórios
-  10. Modelos de regressão quantílica
-  11. Modelos de árvores de regressão e classificação
+  7. Modelos de árvores de regressão e classificação
+  8. Modelos não lineares
+  9. Modelos de regressão com erros não IID
+  10. Modelos de efeitos aleatórios
+  11. Modelos de regressão quantílica
   12. Modelos de redes neurais
   13. Introdução aos modelos de regressão multivariados
 
