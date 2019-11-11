@@ -117,8 +117,18 @@ cat(paste0("  ",
       * Procura extensiva em grid.
       * Regiões de confiança conjunta.
       * Intervalos de confiança baseados em métodos de reamostragem.
-  26. Qui 31/Out:(PJ) Modelos com dependência entre observações. Três formas de induzir dependência (transição, marginal e efeitos aleatórios). Introdução aos modelos de efeitos aleatórios
-  27. Ter 05/Nov: (PJ/WZ) Modelos de efeitos aleatórios - forma geral, inferência, construção das matrizes. Exemplo. 
+  26. Qui 31/Out: (PJ) Modelos com dependência entre observações.
+      * Três formas de induzir dependência (transição, marginal e
+        efeitos aleatórios).
+      * Introdução aos modelos de efeitos aleatórios.
+  27. Ter 05/Nov: (PJ/WZ) Modelos de efeitos aleatórios.
+      * Forma geral, inferência, construção das matrizes de efeitos
+        fixos e aleatórios.
+      * Situações em que o efeito é fixo ou aleatório e suas implicações
+        inferênciais.
+      * Exemplos de análise com emprego de termos de efeito aleatório:
+        [comportamento ingestivo](http://leg.ufpr.br/~walmes/analises/RHTBGoes/copaiba.html),
+        [evolução de severidade de doença](http://www.leg.ufpr.br/~walmes/pacotes/RDASC/articles/leaf_spot.html).
   28. Ter 07/Nov: 2º avaliação.
   29. Ter 12/Nov:
   30. Qui 14/Nov:
