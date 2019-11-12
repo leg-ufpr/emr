@@ -77,6 +77,9 @@ navbar:
         - text: regressao-nao-linear-2.R
           href: ./scripts/regressao-nao-linear-2.R
           icon: fa-file
+        - text: efeitos-aleatorios.R
+          href: ./scripts/efeitos-aleatorios.R
+          icon: fa-file
   right:
     - icon: fa-user
       text: P. Justiniano
