@@ -69,7 +69,7 @@ output:
   1. Inferência em Modelos Heterocedásticos · Cribari-Neto & Soares
      ([download](http://www.leg.ufpr.br/~paulojus/CE092/Cribari-Soares-Heterocedasticos.pdf)).
   2. Confiabilidade e Precisão na Estimação de Médias · Singer, André &
-     Peres ([donwload](www.rbes.ibge.gov.br/images/doc/rbe_236_jan_jun2012.pdf)).
+     Peres ([donwload](http://www.rbes.ibge.gov.br/images/doc/rbe_236_jan_jun2012.pdf)).
      O arquivo de dados está em
      <http://www.leg.ufpr.br/~paulojus/CE092/singer.dat>.
 
