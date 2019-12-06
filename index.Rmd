@@ -57,8 +57,8 @@ output:
 
   * ~10 sabatinas semanais.
   * 2 provas.
-    * 1ª prova: Terça 17 de Setembro de 2019.
-    * 2ª prova: Terça 05 de Novembro de 2019.
+    * [1ª prova](http://www.leg.ufpr.br/~paulojus/CE092/prova1-2019.pdf):: Terça 17 de Setembro de 2019.
+    * [2ª prova](http://www.leg.ufpr.br/~paulojus/CE092/prova2-2019.pdf): Terça 05 de Novembro de 2019.
   * 1 trabalho: 18/11 a 29/11 de 2019.
   * Exame final: Terça 10 de Dezembro de 2019.
 
